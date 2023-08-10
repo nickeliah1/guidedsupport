@@ -20,4 +20,7 @@ jobs:
         aws-region: ap-southeast-2
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 sync static s3://guidedsupport.com.au --acl public-read --exclude .DS_Store --dryrun --debug
+        aws s3 sync static s3://guidedsupport.com.au --acl public-read --exclude .DS_Store
+    - name: Invalidate the CDN cache
+      run: |
+        aws cloudfront create-invalidation --distribution-id E1TBT33MURMA5S --paths "/*"
